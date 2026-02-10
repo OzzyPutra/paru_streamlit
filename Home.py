@@ -63,8 +63,8 @@ with col_hero1:
 
 with col_hero2:
     # Menampilkan metrik dummy atau informasi singkat agar visual seimbang
-    st.metric(label="Akurasi Model Terakhir", value="92%", delta="Optimal")
-    st.metric(label="Total Data Latih", value="500+", delta="Records")
+    st.metric(label="Akurasi Model ", value="87.03%", delta="Optimal")
+    st.metric(label="Total Data Latih", value="24000", delta="Records")
 
 st.markdown("---")
 
@@ -74,11 +74,11 @@ col1, col2, col3 = st.columns(3)
 
 with col1:
     st.info("📂 **Manajemen Dataset**")
-    st.caption("Upload dataset CSV/Excel, lihat preview data, dan tentukan variabel target untuk pelatihan.")
+    st.caption("lihat preview data, dan tentukan variabel target "Hasil" pelatihan.")
 
 with col2:
     st.warning("🧠 **Pelatihan Model**")
-    st.caption("Latih model Naïve Bayes secara real-time dan simpan model terbaik untuk prediksi API.")
+    st.caption("Latih model Naïve Bayes secara real-time")
 
 with col3:
     st.error("📊 **Dashboard Evaluasi**")
@@ -89,5 +89,6 @@ st.markdown("---")
 # Footer kecil
 st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown("<div style='text-align: center; color: grey;'>Dibuat dengan ❤️ menggunakan Streamlit</div>", unsafe_allow_html=True)
+
 
 
