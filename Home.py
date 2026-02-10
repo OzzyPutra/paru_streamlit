@@ -57,9 +57,12 @@ with col_hero1:
     Dengan mengunggah data medis, sistem akan melakukan klasifikasi risiko penyakit paru-paru secara otomatis.
     """)
     st.write("**Langkah Mudah Menggunakan Aplikasi:**")
-    st.markdown("1. Unduh sampel dataset di bawah.")
-    st.markdown("2. Pergi ke menu **Dataset** untuk upload file.")
-    st.markdown("3. Latih model dan lihat hasil evaluasi di **Dashboard**.")
+    st.markdown("1. Melatih dataset yang sudah disediakan dan kolom hasil menjadi target.")
+    st.markdown("2. Latih model dan lihat hasil evaluasi di **Dashboard**. ")
+    st.markdown("3. Dashboard untuk melihat hasil Confusion Matrix dari hasil pelatihan")
+    st.markdown("4. Prediksi Manual untuk inputan manual")
+    st.markdown("5. History Prediksi untuk melihat data historis inputan manual")
+    st.markdown("6. Pipeline Report melihat ringkasan alur sistem")
 
 with col_hero2:
     # Menampilkan metrik dummy atau informasi singkat agar visual seimbang
