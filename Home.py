@@ -38,9 +38,8 @@ with st.sidebar:
     
     st.markdown("---")
     st.markdown("**Metode:** Naïve Bayes Classifier")
-    st.markdown("**Framework:** Laravel & Streamlit")
     st.markdown("---")
-    st.caption("© 2024 Skripsi/Tesis Project")
+    st.caption("© 2026 Skripsi")
 
 # 4. Header / Judul Utama
 st.title("🫁 Sistem Prediksi Penyakit Paru-Paru")
@@ -92,6 +91,7 @@ st.markdown("---")
 # Footer kecil
 st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown("<div style='text-align: center; color: grey;'>Dibuat dengan ❤️ menggunakan Streamlit</div>", unsafe_allow_html=True)
+
 
 
 
