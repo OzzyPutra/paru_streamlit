@@ -86,21 +86,8 @@ with col3:
 
 st.markdown("---")
 
-# 7. Area Download (Dibuat dalam Expander atau Container khusus)
-st.subheader("📥 Area Download")
-
-with st.container():
-    col_dl_text, col_dl_btn = st.columns([3, 1])
-    
-    with col_dl_text:
-        st.write("**Belum memiliki data?**")
-        st.write("Unduh sampel dataset berikut untuk menguji coba fungsionalitas sistem sebelum menggunakan data riil.")
-    
-    with col_dl_btn:
-        # File Path
-        file_path = "sample_dataset.csv" # Pastikan file ini ada di folder root project
-
 # Footer kecil
 st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown("<div style='text-align: center; color: grey;'>Dibuat dengan ❤️ menggunakan Streamlit</div>", unsafe_allow_html=True)
+
 
