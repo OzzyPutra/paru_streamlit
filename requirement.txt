@@ -1,7 +1,6 @@
-pandas
 numpy
 streamlit
 scikit-learn
-matplotlib
-pip
+pandas
+joblib
 
