@@ -57,6 +57,7 @@ if os.path.exists(dataset_paruparu):
         st.error(f"Terjadi kesalahan saat membaca file: {e}")
 
 else:
-    st.error(f"❌ File tidak ditemukan: {DATASET_PATH}")
+    st.error(f"❌ File tidak ditemukan: {dataset_paruparu}")
+
 
 
