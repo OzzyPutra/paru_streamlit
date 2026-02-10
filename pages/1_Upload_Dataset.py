@@ -3,43 +3,37 @@ import pandas as pd
 import os
 import requests
 from services.ml_service import train_and_evaluate
-# from utils.helpers import load_dataset # (Opsional: Kita pakai pandas langsung agar lebih aman membaca path file)
 
 st.title("📂 Dataset & Training (Server File)")
 
 # --- KONFIGURASI LOKASI FILE ---
-# Tentukan lokasi file dataset yang "sudah terupload" / tersedia di server
-# Pastikan file ini benar-benar ada di folder proyek Anda
-DATASET_PATH = "data/dataset_paru_paru.csv" 
+DATASET_PATH = "data/dataset_paruparu.csv"  # <--- Ini nama variabel yang benar
 
-# Cek apakah file ada
-if os.path.exists(dataset_paruparu):
+# Cek apakah file ada (Gunakan DATASET_PATH, bukan dataset_paruparu)
+if os.path.exists(DATASET_PATH):
     # Tampilkan info file
-    st.info(f"Menggunakan dataset dari server: **{dataset_paruparu}**")
+    st.info(f"Menggunakan dataset dari server: **{DATASET_PATH}**")
     
-    # 1. Load Dataset langsung dari path
-    # Kita gunakan pd.read_csv langsung karena load_dataset bawaan helper 
-    # mungkin dirancang khusus untuk objek st.file_uploader, bukan string path.
     try:
+        # Load Dataset
         if DATASET_PATH.endswith('.csv'):
-            df = pd.read_csv(dataset_paruparu)
+            df = pd.read_csv(DATASET_PATH) # <--- Perbaikan disini
         else:
-            df = pd.read_excel(dataset_paruparu)
+            df = pd.read_excel(DATASET_PATH) # <--- Perbaikan disini
             
         # Simpan ke session state
         st.session_state["uploaded_df"] = df
-        st.session_state["uploaded_filename"] = os.path.basename(dataset_paruparu)
+        st.session_state["uploaded_filename"] = os.path.basename(DATASET_PATH) # <--- Perbaikan disini
 
-        # 2. Tampilkan Sample Data
+        # Tampilkan Sample Data
         st.subheader("📊 Data Sample")
         st.dataframe(df.head(), use_container_width=True)
 
-        # 3. Pilih Target Column
-        # (Logika sama seperti sebelumnya)
+        # Pilih Target Column
         target_col = st.selectbox("Pilih kolom target:", df.columns, index=len(df.columns)-1)
         st.session_state["target_col"] = target_col
 
-        # 4. Tombol Training
+        # Tombol Training
         if st.button("Latih & Simpan Model"):
             with st.spinner("Sedang melatih model..."):
                 acc, cm, report = train_and_evaluate(df, target_col)
@@ -53,11 +47,12 @@ if os.path.exists(dataset_paruparu):
                 "report": report,
                 "target_col": target_col
             }
+            
+            # --- Tambahan Logic API Reload & Download (Opsional) ---
+            # (Tambahkan kode reload API di sini jika diperlukan seperti kode sebelumnya)
+
     except Exception as e:
         st.error(f"Terjadi kesalahan saat membaca file: {e}")
 
 else:
-    st.error(f"❌ File tidak ditemukan: {dataset_paruparu}")
-
-
-
+    st.error(f"❌ File tidak ditemukan: {DATASET_PATH}")
