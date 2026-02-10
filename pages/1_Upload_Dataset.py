@@ -71,5 +71,6 @@ if os.path.exists(dataset_paruparu):
                     #label="💾 Download Model",
                     #data=f,
                     #file_name="naive_bayes_model.pkl"
+            )
 
 
