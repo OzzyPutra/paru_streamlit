@@ -99,21 +99,8 @@ with st.container():
     with col_dl_btn:
         # File Path
         file_path = "sample_dataset.csv" # Pastikan file ini ada di folder root project
-        
-        # Logika Download
-        if os.path.exists(file_path):
-            with open(file_path, "rb") as file:
-                st.download_button(
-                    label="📄 Download Sampel CSV",
-                    data=file,
-                    file_name="dataset_paruparu.csv",
-                    mime="text/csv",
-                    type="primary", # Membuat tombol berwarna merah (sesuai tema paru-paru/kesehatan)
-                    use_container_width=True
-                )
-        else:
-            st.error("File sampel tidak ditemukan.")
 
 # Footer kecil
 st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown("<div style='text-align: center; color: grey;'>Dibuat dengan ❤️ menggunakan Streamlit</div>", unsafe_allow_html=True)
+
