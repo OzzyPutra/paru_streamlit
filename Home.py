@@ -74,7 +74,7 @@ col1, col2, col3 = st.columns(3)
 
 with col1:
     st.info("📂 **Manajemen Dataset**")
-    st.caption("lihat preview data, dan tentukan variabel target "Hasil" pelatihan.")
+    st.caption("lihat preview data, dan tentukan variabel target Hasil pelatihan.")
 
 with col2:
     st.warning("🧠 **Pelatihan Model**")
@@ -89,6 +89,7 @@ st.markdown("---")
 # Footer kecil
 st.markdown("<br><br>", unsafe_allow_html=True)
 st.markdown("<div style='text-align: center; color: grey;'>Dibuat dengan ❤️ menggunakan Streamlit</div>", unsafe_allow_html=True)
+
 
 
 
