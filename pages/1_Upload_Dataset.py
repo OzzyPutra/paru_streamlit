@@ -1,51 +1,75 @@
 import streamlit as st
-from utils.helpers import load_dataset
-from services.ml_service import train_and_evaluate
+import pandas as pd
 import os
 import requests
+from services.ml_service import train_and_evaluate
+# from utils.helpers import load_dataset # (Opsional: Kita pakai pandas langsung agar lebih aman membaca path file)
 
-st.title("📂 Upload Dataset & Training")
+st.title("📂 Dataset & Training (Server File)")
 
-uploaded_file = st.file_uploader("Upload dataset (Excel/CSV)", type=["csv", "xlsx"])
+# --- KONFIGURASI LOKASI FILE ---
+# Tentukan lokasi file dataset yang "sudah terupload" / tersedia di server
+# Pastikan file ini benar-benar ada di folder proyek Anda
+DATASET_PATH = "data/dataset_paru_paru.csv" 
 
-if uploaded_file:
-    df = load_dataset(uploaded_file)
-    st.session_state["uploaded_df"] = df
-    st.session_state["uploaded_filename"] = uploaded_file.name
-    st.subheader("📊 Data Sample")
-    st.dataframe(df.head(), use_container_width=True)
+# Cek apakah file ada
+if os.path.exists(dataset_paruparu):
+    # Tampilkan info file
+    st.info(f"Menggunakan dataset dari server: **{dataset_paruparu}**")
+    
+    # 1. Load Dataset langsung dari path
+    # Kita gunakan pd.read_csv langsung karena load_dataset bawaan helper 
+    # mungkin dirancang khusus untuk objek st.file_uploader, bukan string path.
+    try:
+        if DATASET_PATH.endswith('.csv'):
+            df = pd.read_csv(dataset_paruparu)
+        else:
+            df = pd.read_excel(dataset_paruparu)
+            
+        # Simpan ke session state
+        st.session_state["uploaded_df"] = df
+        st.session_state["uploaded_filename"] = os.path.basename(dataset_paruparu)
 
-    target_col = st.selectbox("Pilih kolom target:", df.columns, index=len(df.columns)-1)
-    st.session_state["target_col"] = target_col
+        # 2. Tampilkan Sample Data
+        st.subheader("📊 Data Sample")
+        st.dataframe(df.head(), use_container_width=True)
 
-    if st.button("Latih & Simpan Model"):
-        acc, cm, report = train_and_evaluate(df, target_col)
+        # 3. Pilih Target Column
+        # (Logika sama seperti sebelumnya)
+        target_col = st.selectbox("Pilih kolom target:", df.columns, index=len(df.columns)-1)
+        st.session_state["target_col"] = target_col
 
-        st.success(f"✅ Model berhasil dilatih & disimpan. Akurasi: {acc:.2%}")
+        # 4. Tombol Training
+        if st.button("Latih & Simpan Model"):
+            with st.spinner("Sedang melatih model..."):
+                acc, cm, report = train_and_evaluate(df, target_col)
 
-        # Simpan hasil evaluasi ke session_state agar bisa dipakai di dashboard
-        st.session_state["evaluation"] = {
-            "acc": acc,
-            "cm": cm.tolist(),
-            "report": report,
-            "target_col": target_col
-        }
+            st.success(f"✅ Model berhasil dilatih & disimpan. Akurasi: {acc:.2%}")
 
-        api_url = os.getenv("API_URL", "http://127.0.0.1:8001")
-        try:
-            resp = requests.post(f"{api_url}/reload-model", timeout=5)
-            if resp.ok:
-                st.info("Model API berhasil di-reload.")
-            else:
-                st.warning(f"Gagal reload model API. Status: {resp.status_code}")
-        except requests.RequestException as e:
-            st.warning(f"Gagal menghubungi API untuk reload model: {e}")
+            # Simpan hasil evaluasi
+            st.session_state["evaluation"] = {
+                "acc": acc,
+                "cm": cm.tolist(),
+                "report": report,
+                "target_col": target_col
+            }
 
-        model_path = "models/naive_bayes_model.pkl"
-        if os.path.exists(model_path):
-            with open(model_path, "rb") as f:
-                st.download_button(
-                    label="💾 Download Model",
-                    data=f,
-                    file_name="naive_bayes_model.pkl"
+        #api_url = os.getenv("API_URL", "http://127.0.0.1:8001")
+        #try:
+            #resp = requests.post(f"{api_url}/reload-model", timeout=5)
+            #if resp.ok:
+                #st.info("Model API berhasil di-reload.")
+            #else:
+                #st.warning(f"Gagal reload model API. Status: {resp.status_code}")
+        #except requests.RequestException as e:
+            #st.warning(f"Gagal menghubungi API untuk reload model: {e}")
+
+        #model_path = "models/naive_bayes_model.pkl"
+        #if os.path.exists(model_path):
+            #with open(model_path, "rb") as f:
+                #st.download_button(
+                    #label="💾 Download Model",
+                    #data=f,
+                    #file_name="naive_bayes_model.pkl"
                 )
+
