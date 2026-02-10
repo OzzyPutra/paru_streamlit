@@ -53,24 +53,10 @@ if os.path.exists(dataset_paruparu):
                 "report": report,
                 "target_col": target_col
             }
+    except Exception as e:
+        st.error(f"Terjadi kesalahan saat membaca file: {e}")
 
-        #api_url = os.getenv("API_URL", "http://127.0.0.1:8001")
-        #try:
-            #resp = requests.post(f"{api_url}/reload-model", timeout=5)
-            #if resp.ok:
-                #st.info("Model API berhasil di-reload.")
-            #else:
-                #st.warning(f"Gagal reload model API. Status: {resp.status_code}")
-        #except requests.RequestException as e:
-            #st.warning(f"Gagal menghubungi API untuk reload model: {e}")
-
-        #model_path = "models/naive_bayes_model.pkl"
-        #if os.path.exists(model_path):
-            #with open(model_path, "rb") as f:
-                #st.download_button(
-                    #label="💾 Download Model",
-                    #data=f,
-                    #file_name="naive_bayes_model.pkl"
-            )
+else:
+    st.error(f"❌ File tidak ditemukan: {DATASET_PATH}")
 
 
