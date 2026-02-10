@@ -1,5 +1,5 @@
 import streamlit as st
-
+import os
 st.set_page_config(page_title="Prediksi Penyakit Paru-Paru", layout="wide")
 
 st.title("🫁 Aplikasi Prediksi Penyakit Paru-Paru")
@@ -29,3 +29,4 @@ if os.path.exists(file_path):
         )
 else:
     st.warning(f"File sampel '{file_path}' tidak ditemukan. Pastikan file ada di folder proyek.")
+
